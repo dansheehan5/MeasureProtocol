@@ -1,25 +1,27 @@
 import pandas as pd
+import polars as pl
 
 # Converts an access log file to a data frame
 def access_log_to_df(path):
-    df = pd.DataFrame(columns=['ip',
-                               'date',
-                               'time',
-                               'req_type',
-                               'api_call',
-                               'http_return',
-                               'other_code',
-                               'req_url',
-                               'user_agent',
-                               'final_code'])
+
+
+    data = []
 
     with open(path, 'r') as f:
         i = 0
         for line in f:
-            df.loc[len(df)] = read_access_log_entry(line)
-            i += 1
-            if i == 100000:
-                break
+            data.append(read_access_log_entry(line))
+
+    df = pl.DataFrame(data, schema=['ip',
+                              'date',
+                              'time',
+                              'req_type',
+                              'api_call',
+                              'http_return',
+                              'other_code',
+                              'req_url',
+                              'user_agent',
+                              'final_code'])
     return df
 
 def read_access_log_entry(entry):
@@ -129,11 +131,3 @@ def read_access_log_entry(entry):
             'user_agent': user_agent,
             'final_code': final_code,}
 
-# load in dataframe from file
-df0 = access_log_to_df("../access_logs/access_log")
-
-print("loaded")
-
-# Get all unique dates
-dates = set(df0['date'])
-print(dates)
