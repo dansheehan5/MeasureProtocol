@@ -1,0 +1,20 @@
+Potential Ideas:
+
+Certain API Endpoints get accessed way more: check frequency of accessing
+    Will have to go back to analytics and the actual logs to see if stuff is being spammed on repeat
+
+Also could check IP address to see if it is a bot farm from an easily detectable service
+    HUGE HUGE # come from an IP that has a domain name associated with AWS EC2
+
+2 approaches I'm thinking about:
+Unsupervised model:
+    Will take in the log at the end of the day and then output weird IPs
+    Focus on detecting outliers
+
+Supervised:
+    Takes the calls as they come in and blocks/flags IPs in real time
+    Main problem is that I would need to know which IP addresses are spam ahead of time
+
+INSIGHTS:
+Some IP addresses associated w things that can host spam bots (AWS EC2)
+Some API calls get spammed more often than others 
